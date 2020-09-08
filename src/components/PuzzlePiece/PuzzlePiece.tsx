@@ -2,18 +2,18 @@ import React, { MouseEvent } from 'react'
 
 import useStyles from './styles';
 
-type puzzleProps = {
-  originalPosition: number,
-  currentPosition: number,
+interface puzzleProps {
+  pos: number,
+  content: string,
   movePieceCallback: (x: number) => void,
   isActivePiece: boolean,
   isAdjacentPiece: boolean,
   image?: string,
 }
 
-const PuzzlePiece = ({ originalPosition, currentPosition, image, movePieceCallback, isAdjacentPiece, isActivePiece }: puzzleProps) => {
+const PuzzlePiece = ({ pos, content, image, movePieceCallback, isAdjacentPiece, isActivePiece }: puzzleProps) => {
   const handleClick = (e: MouseEvent) => {
-    if (isAdjacentPiece) movePieceCallback(currentPosition);
+    if (isAdjacentPiece) movePieceCallback(pos);
   }
 
   const {
@@ -28,7 +28,7 @@ const PuzzlePiece = ({ originalPosition, currentPosition, image, movePieceCallba
       onClick={handleClick}
     >
       {
-        originalPosition
+        content
       }
     </div>
 

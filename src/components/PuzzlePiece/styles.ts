@@ -6,13 +6,13 @@ const useStyles = createUseStyles({
     height: '100%',
     backgroundColor: '#EE6352',
     display: 'grid',
-    placeItems: 'center'
+    placeItems: 'center',
+    transition: 'all 0.3s',
   },
   active: {
-    opacity: 0
   },
   adjacent: {
-    backgroundColor: '#F8C630'
+    backgroundColor: '#FF7564'
   }
 })
 

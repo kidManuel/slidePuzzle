@@ -3,44 +3,47 @@ import { motion } from 'framer-motion'
 
 import useStyles from './styles';
 
-
-type puzzleProps = {
-  columns: number,
-  children: React.ReactNode[],
+export type ISquaredGalleryElementsData = {
+  id: string,
+  order: number,
+  element: ReactElement,
+  hidden?: boolean
 }
 
-const SquaredGallery = ({ columns, children }: puzzleProps) => {
+interface IGalleryProps {
+  columns: number,
+  elements: ISquaredGalleryElementsData[],
+}
+
+const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
   const {
     galleryContainer,
-    galleryItem
+    galleryItem,
+    hidden
   } = useStyles();
 
   const containerSize = 600;
   const columnSize = containerSize / columns;
 
-  const getItemDynamicStyles = (index: number): React.CSSProperties => {
-    return {
-    }
-  }
-
   return (
     <ul className={galleryContainer}>
       {
-        children.map((element, index) => (
+        elements.map((element) => (
           element &&
           <motion.li
-            key={index}
-            className={galleryItem}
-            id={`element${}`}
+            key={element.id}
+            id={element.id}
+            className={`${galleryItem} ${element.hidden ? hidden : ''}`}
+            transition={{ duration: 0.02, }}
             animate={{
               width: columnSize,
               height: columnSize,
-              top: (Math.floor(index / columns) * columnSize),
-              left: (index % columns) * columnSize
+              top: (Math.floor(element.order / columns) * columnSize),
+              left: (element.order % columns) * columnSize,
             }}
           >
             {
-              element
+              element.element
             }
           </motion.li>
         ))

@@ -16,7 +16,11 @@ const useStyles = createUseStyles({
       border: 'solid 2px #08B2E3'
     },
     cursor: 'pointer',
-    transition: 'all 0.3s'
+    transition: 'all 0.3s',
+    zIndex: 2,
+  },
+  hidden: {
+    zIndex: -1
   }
 })
 
