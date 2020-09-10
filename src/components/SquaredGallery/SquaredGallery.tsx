@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 
 import useStyles from './styles';
 
-export type ISquaredGalleryElementsData = {
+export type ISquaredGalleryElementData = {
   id: string,
   order: number,
   element: ReactElement,
@@ -12,7 +12,7 @@ export type ISquaredGalleryElementsData = {
 
 interface IGalleryProps {
   columns: number,
-  elements: ISquaredGalleryElementsData[],
+  elements: ISquaredGalleryElementData[],
 }
 
 const SquaredGallery = ({ columns, elements }: IGalleryProps) => {

@@ -1,44 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 
-import { PuzzlePiece, SquaredGallery } from '../'
-import { ISquaredGalleryElementsData } from '../SquaredGallery/SquaredGallery'
+import { IPieceState, IXYPosition } from '../../common/interfaces'
 
-interface puzzleProps {
+import * as selectors from '../../store/selectors';
+import { moveActivePiece } from '../../store/actions';
+
+import { PuzzlePiece, SquaredGallery, IGalleryElement } from '../'
+
+interface IPuzzleProps {
   size: number,
   showNumbers: boolean,
-  image?: string
 }
 
-interface puzzleStateinterface {
-  activePiecePosition: number,
-  adjacentToActive: number[],
-}
+const SlidePuzzle = ({ size, showNumbers }: IPuzzleProps) => {
+  const dispatch = useDispatch();
+  const pieces = useSelector(selectors.getPieces);
+  const activePiecePosition = useSelector(selectors.getActivePiece);
+  const adjacentToActive = useSelector(selectors.getAdjacentToActive);
 
-interface pieceState {
-  key: number,
-  position: IXYPosition,
-}
 
-interface IXYPosition {
-  x: number,
-  y: number,
-}
-
-const SlidePuzzle = ({ size, showNumbers, image }: puzzleProps) => {
   const movePiece = (x: number): void => {
     const newPiecePositions = [...pieces];
-    const { activePiecePosition } = puzzleState;
 
-    [newPiecePositions[x], newPiecePositions[activePiecePosition]] = [newPiecePositions[activePiecePosition], newPiecePositions[x]]
+    // Switch two piece positions
+    [newPiecePositions[x], newPiecePositions[activePiecePosition]] = [newPiecePositions[activePiecePosition], newPiecePositions[x]];
     newPiecePositions[x].position = getXYFromPosition(x);
     newPiecePositions[activePiecePosition].position = getXYFromPosition(activePiecePosition);
 
-    setPieces(newPiecePositions);
+    updateBoardStates(newPiecePositions);
   }
 
-  const updateBoardStates = (): void => {
-    const newActivePieceIndex = pieces.findIndex(e => e.key === pieces.length - 1);
-    const newActivePiecePosition = pieces[newActivePieceIndex].position;
+  const updateBoardStates = (piecesToAnalyze: IPieceState[]): void => {
+    const newActivePieceIndex = piecesToAnalyze.findIndex(e => e.key === pieces.length - 1);
+    const newActivePiecePosition = piecesToAnalyze[newActivePieceIndex].position;
     const { x, y } = newActivePiecePosition;
     const adjacents = [];
 
@@ -59,10 +54,11 @@ const SlidePuzzle = ({ size, showNumbers, image }: puzzleProps) => {
       adjacents.push(newActivePieceIndex - 1)
     }
 
-    setPuzzleState({
+    dispatch(moveActivePiece({
+      pieces: piecesToAnalyze,
       activePiecePosition: newActivePieceIndex,
       adjacentToActive: adjacents
-    })
+    }))
   }
 
   const getXYFromPosition = (position: number): IXYPosition => {
@@ -72,7 +68,7 @@ const SlidePuzzle = ({ size, showNumbers, image }: puzzleProps) => {
     }
   }
 
-  const prepUnshuffledPieces = (): pieceState[] => {
+  const prepUnshuffledPieces = (): IPieceState[] => {
     const totalPieces = size * size;
     const newPieces = [];
     for (let n = 0; n < totalPieces; n++) {
@@ -85,23 +81,7 @@ const SlidePuzzle = ({ size, showNumbers, image }: puzzleProps) => {
     return newPieces;
   }
 
-  const [pieces, setPieces] = useState<pieceState[]>(prepUnshuffledPieces());
-  const [puzzleState, setPuzzleState] = useState<puzzleStateinterface>({
-    activePiecePosition: 0,
-    adjacentToActive: []
-  });
-
-  useEffect(() => {
-    setPieces(prepUnshuffledPieces());
-  }, [size, showNumbers, image])
-
-  useEffect(() => {
-    updateBoardStates()
-  }, [pieces])
-
-  const formGalleryElements = (): ISquaredGalleryElementsData[] => {
-    const { activePiecePosition, adjacentToActive } = puzzleState;
-
+  const formGalleryElements = (): IGalleryElement[] => {
     return pieces.map((element, index) => {
       const { key } = element;
       const isActivePiece = (index === activePiecePosition);
@@ -122,9 +102,8 @@ const SlidePuzzle = ({ size, showNumbers, image }: puzzleProps) => {
     })
   }
 
-
   return (
-    <div className={'SlidePuzzle'}>
+    <div className={'SlidePuzzle'} >
       <SquaredGallery
         columns={size}
         elements={formGalleryElements()}
