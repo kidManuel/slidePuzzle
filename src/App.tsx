@@ -2,19 +2,24 @@ import React from 'react';
 import { Provider } from "react-redux";
 import store from "./store/store";
 
-import './App.css';
-import { SlidePuzzle } from './components/';
+import useStyles from './styles';
+import { SlidePuzzle, Settings } from './components/';
 
 function App() {
+  const {
+    AppContainer
+  } = useStyles();
+
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className={AppContainer}>
         <SlidePuzzle
           size={4}
           showNumbers={true}
         />
+        <Settings />
       </div>
-    </Provider>
+    </Provider >
   );
 }
 

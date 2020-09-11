@@ -2,8 +2,8 @@ import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles({
   galleryContainer: {
-    width: 600,
-    height: 600,
+    width: '100vmin',
+    height: '100vmin',
     backgroundColor: '#EFE9F4',
     position: 'relative'
   },
@@ -16,7 +16,6 @@ const useStyles = createUseStyles({
       border: 'solid 2px #08B2E3'
     },
     cursor: 'pointer',
-    transition: 'all 0.3s',
     zIndex: 2,
   },
   hidden: {

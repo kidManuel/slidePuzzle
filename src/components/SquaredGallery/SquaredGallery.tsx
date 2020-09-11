@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useRef, useLayoutEffect, useState } from 'react';
+
 import { motion } from 'framer-motion'
 
 import useStyles from './styles';
@@ -16,17 +17,35 @@ interface IGalleryProps {
 }
 
 const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
+  const containerElement = useRef<HTMLUListElement>(null);
+  const [containerSize, setContainerSize] = useState<number>(0)
+
   const {
     galleryContainer,
     galleryItem,
     hidden
   } = useStyles();
 
-  const containerSize = 600;
+  useLayoutEffect(() => {
+    updateSize();
+    const handleResize = () => {
+      updateSize()
+    }
+
+    window.addEventListener('resize', handleResize)
+  }, [])
+
+  const updateSize = () => {
+    setContainerSize(containerElement.current?.offsetWidth || 0);
+  }
+
   const columnSize = containerSize / columns;
 
   return (
-    <ul className={galleryContainer}>
+    <ul
+      className={galleryContainer}
+      ref={containerElement}
+    >
       {
         elements.map((element) => (
           element &&
@@ -34,7 +53,9 @@ const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
             key={element.id}
             id={element.id}
             className={`${galleryItem} ${element.hidden ? hidden : ''}`}
-            transition={{ duration: 0.02, }}
+            transition={{
+              duration: 0.2,
+            }}
             animate={{
               width: columnSize,
               height: columnSize,
