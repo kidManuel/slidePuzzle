@@ -1,4 +1,5 @@
-import React, { ReactElement, useRef, useLayoutEffect, useState } from 'react';
+import React, { ReactElement, useRef, useLayoutEffect, useState, useCallback } from 'react';
+import { throttle } from 'lodash'
 
 import { motion } from 'framer-motion'
 
@@ -26,10 +27,15 @@ const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
     hidden
   } = useStyles();
 
+  const throttledUpdate = useCallback(throttle(() => {
+    updateSize()
+  }, 200), [])
+
   useLayoutEffect(() => {
     updateSize();
+
     const handleResize = () => {
-      updateSize()
+      throttledUpdate()
     }
 
     window.addEventListener('resize', handleResize)
