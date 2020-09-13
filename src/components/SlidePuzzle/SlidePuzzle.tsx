@@ -91,7 +91,7 @@ const SlidePuzzle = () => {
       backgroundSize: bgSizeStyle,
       backgroundPosition: `-${perPieceSize * originalXY.x}px -${perPieceSize * originalXY.y}px`
     }
-  }, [size, containerSize])
+  }, [size, containerSize, isBgHorizontal])
 
   const formGalleryElements = (): IGalleryElement[] => {
     return pieces.map((element, index) => {
