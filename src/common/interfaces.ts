@@ -12,4 +12,10 @@ export interface IPuzzleState {
   pieces: IPieceState[],
   adjacentToActive: number[],
   activePiecePosition: number,
+  isSolved: boolean
+}
+
+export interface IUserConfig {
+  size: number,
+  showHints: boolean,
 }

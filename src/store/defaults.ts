@@ -1,6 +1,11 @@
 import { IPuzzleState } from '../common/interfaces';
 
-export const storeDefault: IPuzzleState = {
+interface IUserConfiguration {
+  showHints: boolean,
+  size: number
+}
+
+export const puzzleStateDefault: IPuzzleState = {
   pieces: [
     { key: 0, position: { x: 0, y: 0 } },
     { key: 1, position: { x: 1, y: 0 } },
@@ -21,4 +26,10 @@ export const storeDefault: IPuzzleState = {
   ],
   activePiecePosition: 15,
   adjacentToActive: [11, 14],
+  isSolved: false
+}
+
+export const userConfigDefault: IUserConfiguration = {
+  showHints: true,
+  size: 4
 } 

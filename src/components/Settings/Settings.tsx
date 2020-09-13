@@ -1,11 +1,34 @@
 import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 
+import { boardStateAction } from '../../store/actions'
+import { getPieces } from '../../store/selectors'
+import { shufflePieces, findActivePieceInBoard, findAdjacentsToActive, isBoardSolved } from '../../common/nPiecePuzzleUtility'
 import useStyles from './styles';
 
 interface ISettingsProps {
 }
 
 const Settings = (props: ISettingsProps) => {
+  const dispatch = useDispatch();
+  const pieces = useSelector(getPieces);
+
+  const handleShuffle = () => {
+    let newPieces = shufflePieces(pieces);
+
+    // Is this check worht it for the one-in-several-billion chance the game gets shuffled to a solved state? 
+    while (isBoardSolved(newPieces)) newPieces = shufflePieces(pieces);
+    const newActivePiecePosition = findActivePieceInBoard(newPieces);
+
+    // TODO PASS SIZE
+    const newAdjacent = findAdjacentsToActive(newPieces, newActivePiecePosition, 4);
+    dispatch(boardStateAction({
+      pieces: newPieces,
+      activePiecePosition: newActivePiecePosition,
+      adjacentToActive: newAdjacent,
+      isSolved: false
+    }))
+  }
 
   const {
     settingsWrapper,
@@ -29,7 +52,7 @@ const Settings = (props: ISettingsProps) => {
       <div className={field}>
         <input
           type='range'
-          min={3}
+          min={2}
           max={10}
           name='puzzleSize'
         />
@@ -38,7 +61,10 @@ const Settings = (props: ISettingsProps) => {
       </label>
       </div>
 
-      <div className={shuffleButton}>
+      <div
+        className={shuffleButton}
+        onClick={handleShuffle}
+      >
         shuffle!
       </div>
     </div>

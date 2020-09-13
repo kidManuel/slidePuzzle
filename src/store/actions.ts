@@ -1,4 +1,4 @@
-import { IPieceState, IPuzzleState } from '../common/interfaces';
+import { IPuzzleState, IUserConfig } from '../common/interfaces';
 
 import * as types from './actionTypes'
 
@@ -6,27 +6,27 @@ interface IBasicAction {
   type: string
 }
 
-interface IUpdatePiecesAction extends IBasicAction {
-  payload: IPieceState[]
-}
-
-interface IMoveActivePieceAction extends IBasicAction {
+export interface IMoveActivePieceAction extends IBasicAction {
   payload: IPuzzleState
 }
 
-const updatePieces = (newPieces: IPieceState[]): IUpdatePiecesAction => {
-  return {
-    type: types.PIECES_UPDATE,
-    payload: newPieces
-  }
+export interface IUpdateUserConfigAction extends IBasicAction {
+  payload: IUserConfig
 }
 
-const moveActivePiece = (newState: IPuzzleState): IMoveActivePieceAction => {
+export const boardStateAction = (newState: IPuzzleState): IMoveActivePieceAction => {
+
+  // TODO change action name
   return {
     type: types.MOVE_ACTIVE,
     payload: newState
   }
 }
 
-export { updatePieces, moveActivePiece }
-export type PuzzleActions = IUpdatePiecesAction | IMoveActivePieceAction;
+
+export const userConfigAction = (newConfig: IUserConfig): IUpdateUserConfigAction => {
+  return {
+    type: types.MOVE_ACTIVE,
+    payload: newConfig
+  }
+}

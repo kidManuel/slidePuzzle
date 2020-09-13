@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 
 import * as types from './actionTypes'
-import { PuzzleActions } from './actions'
-import { storeDefault } from './defaults'
-import { IPuzzleState } from '../common/interfaces';
+import { IMoveActivePieceAction, IUpdateUserConfigAction } from './actions'
+import { puzzleStateDefault, userConfigDefault } from './defaults'
+import { IPuzzleState, IUserConfig } from '../common/interfaces';
 
-const puzzleReducer = (state: IPuzzleState = storeDefault, action: PuzzleActions) => {
+const puzzleReducer = (state: IPuzzleState = puzzleStateDefault, action: IMoveActivePieceAction) => {
   switch (action.type) {
     case types.MOVE_ACTIVE: {
       return {
@@ -18,4 +18,16 @@ const puzzleReducer = (state: IPuzzleState = storeDefault, action: PuzzleActions
   }
 }
 
-export default combineReducers({ puzzleReducer });
+const userConfigurationReducer = (state: IUserConfig = userConfigDefault, action: IUpdateUserConfigAction) => {
+  switch (action.type) {
+    case types.USER_CONFIGURATION: {
+      return {
+        ...state
+      }
+    }
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({ userConfigurationReducer, puzzleReducer });

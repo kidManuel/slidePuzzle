@@ -19,7 +19,8 @@ const PuzzlePiece = ({ pos, content, image, movePieceCallback, isAdjacentPiece, 
   const {
     puzzlePiece,
     adjacent,
-    active
+    active,
+    contentContainer
   } = useStyles();
 
   return (
@@ -27,9 +28,13 @@ const PuzzlePiece = ({ pos, content, image, movePieceCallback, isAdjacentPiece, 
       className={`${puzzlePiece} ${isAdjacentPiece && adjacent}  ${isActivePiece && active}`}
       onClick={handleClick}
     >
-      {
-        content
-      }
+      <div
+        className={contentContainer}
+      >
+        {
+          content
+        }
+      </div>
     </div>
   )
 }

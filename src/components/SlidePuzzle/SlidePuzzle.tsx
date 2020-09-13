@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
-import { IPieceState, IXYPosition } from '../../common/interfaces'
-
+import {
+  movePiece,
+  findAdjacentsToActive,
+  isBoardSolved,
+  getFullBoardData,
+  shufflePieces
+} from '../../common/nPiecePuzzleUtility'
 import * as selectors from '../../store/selectors';
-import { moveActivePiece } from '../../store/actions';
-
+import { boardStateAction } from '../../store/actions';
 import { PuzzlePiece, SquaredGallery, IGalleryElement } from '../'
+
+import useStyles from './styles';
 
 interface IPuzzleProps {
   size: number,
@@ -18,56 +24,31 @@ const SlidePuzzle = ({ size, showNumbers }: IPuzzleProps) => {
   const pieces = useSelector(selectors.getPieces);
   const activePiecePosition = useSelector(selectors.getActivePiece);
   const adjacentToActive = useSelector(selectors.getAdjacentToActive);
+  const isSolved = useSelector(selectors.isSolved);
 
+  const {
+    slidePuzzle,
+    solvedPuzzle
+  } = useStyles();
 
-  const movePiece = (x: number): void => {
-    const newPiecePositions = [...pieces];
+  const movePieceCallback = (x: number): void => {
+    const newPieces = movePiece(pieces, x, activePiecePosition, size);
+    const newAdjacents = findAdjacentsToActive(newPieces, x, size);
+    const isCurrentBoardSolved = isBoardSolved(newPieces)
 
-    // Switch two piece positions
-    [newPiecePositions[x], newPiecePositions[activePiecePosition]] = [newPiecePositions[activePiecePosition], newPiecePositions[x]];
-    newPiecePositions[x].position = getXYFromPosition(x);
-    newPiecePositions[activePiecePosition].position = getXYFromPosition(activePiecePosition);
-
-    updateBoardStates(newPiecePositions);
-  }
-
-  const updateBoardStates = (piecesToAnalyze: IPieceState[]): void => {
-    const newActivePieceIndex = piecesToAnalyze.findIndex(e => e.key === pieces.length - 1);
-    const newActivePiecePosition = piecesToAnalyze[newActivePieceIndex].position;
-    const { x, y } = newActivePiecePosition;
-    const adjacents = [];
-
-    // If not on top row, add the cell directly above. 
-    if (y > 0) {
-      adjacents.push(newActivePieceIndex - size)
-    }
-    // Bottom
-    if (y < size - 1) {
-      adjacents.push(newActivePieceIndex + size)
-    }
-    // Right
-    if (!((x % size) === size - 1)) {
-      adjacents.push(newActivePieceIndex + 1)
-    }
-    //Left
-    if (x % size) {
-      adjacents.push(newActivePieceIndex - 1)
-    }
-
-    dispatch(moveActivePiece({
-      pieces: piecesToAnalyze,
-      activePiecePosition: newActivePieceIndex,
-      adjacentToActive: adjacents
+    dispatch(boardStateAction({
+      pieces: newPieces,
+      activePiecePosition: x,
+      adjacentToActive: newAdjacents,
+      isSolved: isCurrentBoardSolved
     }))
   }
 
-  const getXYFromPosition = (position: number): IXYPosition => {
-    return {
-      x: position % size,
-      y: Math.floor(position / size)
-    }
-  }
+  useEffect(() => {
+    dispatch(boardStateAction(getFullBoardData(shufflePieces(pieces))))
+  }, [])
 
+  /*
   const prepUnshuffledPieces = (): IPieceState[] => {
     const totalPieces = size * size;
     const newPieces = [];
@@ -80,6 +61,7 @@ const SlidePuzzle = ({ size, showNumbers }: IPuzzleProps) => {
     }
     return newPieces;
   }
+  */
 
   const formGalleryElements = (): IGalleryElement[] => {
     return pieces.map((element, index) => {
@@ -92,8 +74,8 @@ const SlidePuzzle = ({ size, showNumbers }: IPuzzleProps) => {
         element: (
           <PuzzlePiece
             pos={index}
-            content={element.key.toString()}
-            movePieceCallback={movePiece}
+            content={(element.key + 1).toString()}
+            movePieceCallback={movePieceCallback}
             isActivePiece={isActivePiece}
             isAdjacentPiece={adjacentToActive.includes(index)}
           />
@@ -103,7 +85,9 @@ const SlidePuzzle = ({ size, showNumbers }: IPuzzleProps) => {
   }
 
   return (
-    <div className={'SlidePuzzle'} >
+    <div
+      className={`${slidePuzzle} ${isSolved ? solvedPuzzle : null}`}
+    >
       <SquaredGallery
         columns={size}
         elements={formGalleryElements()}
