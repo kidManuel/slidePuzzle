@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { debounce, size } from 'lodash'
+import { debounce } from 'lodash'
 
 import { boardStateAction, setHintsVisibilityAction, setPuzzleSizeAction } from '../../store/actions'
 import { getPieces, showHintsSelector, puzzleSizeSelector } from '../../store/selectors'

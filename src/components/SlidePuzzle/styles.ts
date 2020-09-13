@@ -7,21 +7,18 @@ const useStyles = createUseStyles({
     border: 'solid 0px white',
     transition: 'all 0.4s',
     position: 'relative',
-    overflow: 'hidden',
     '&:before': {
       content: '"you solved it my dude!"',
       textTransform: 'uppercase',
       position: 'absolute',
       margin: 'auto',
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
+      top: '-3%',
+      right: '-3%',
       color: 'white',
-      fontSize: 80,
+      fontSize: '2vw',
       fontWeight: 700,
-      width: '50%',
-      height: '50%',
+      width: '25%',
+      height: '25%',
       display: 'grid',
       placeItems: 'center',
       zIndex: 3,
@@ -39,6 +36,14 @@ const useStyles = createUseStyles({
       opacity: 1,
       transform: 'rotate(-10deg)',
     }
+  },
+  backgroundStyle: {
+    position: 'absolute',
+    top: 0,
+    opacity: 0,
+    zIndex: 99,
+    pointerEvents: 'none',
+    display: 'none'
   }
 })
 

@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react'
+import React, { MouseEvent, CSSProperties } from 'react'
 import { useSelector } from "react-redux";
 import { showHintsSelector } from '../../store/selectors';
 
@@ -11,10 +11,10 @@ interface IPuzzlePieceProps {
   movePieceCallback: (x: number) => void,
   isActivePiece: boolean,
   isAdjacentPiece: boolean,
-  image?: string,
+  bgStyles?: CSSProperties,
 }
 
-const PuzzlePiece = ({ pos, content, image, movePieceCallback, isAdjacentPiece, isActivePiece }: IPuzzlePieceProps) => {
+const PuzzlePiece = ({ pos, content, bgStyles, movePieceCallback, isAdjacentPiece, isActivePiece }: IPuzzlePieceProps) => {
   const shouldShowHints = useSelector(showHintsSelector);
 
   const handleClick = (e: MouseEvent) => {
@@ -32,6 +32,7 @@ const PuzzlePiece = ({ pos, content, image, movePieceCallback, isAdjacentPiece, 
   return (
     <div
       className={`${puzzlePiece} ${isAdjacentPiece && adjacent} ${isActivePiece && active} ${!shouldShowHints && hideHints}`}
+      style={bgStyles}
       onClick={handleClick}
     >
       <div

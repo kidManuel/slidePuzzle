@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback, CSSProperties, useRef, useState, useLayoutEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import { debounce } from 'lodash'
 
 import {
   movePiece,
   getFullBoardData,
-  shufflePieces,
+  getXYFromPosition,
   prepNewShuffledBoard
 } from '../../common/nPiecePuzzleUtility'
+import { IPieceState } from '../../common/interfaces'
 import * as selectors from '../../store/selectors';
 import { boardStateAction } from '../../store/actions';
 import { PuzzlePiece, SquaredGallery, IGalleryElement } from '../'
 
 import useStyles from './styles';
+import bgImage from './greatWave.jpg'
 
 const SlidePuzzle = () => {
   const dispatch = useDispatch();
@@ -20,23 +23,70 @@ const SlidePuzzle = () => {
   const adjacentToActive = useSelector(selectors.getAdjacentToActive);
   const isSolved = useSelector(selectors.isSolved);
   const size = useSelector(selectors.puzzleSizeSelector);
-
+  const [isBgHorizontal, setIsBgHorizontal] = useState<boolean>(true);
+  const [containerSize, setContainerSize] = useState<number>(0)
+  const backgroundRef = useRef<HTMLImageElement>(null)
+  const galleryRef = useRef<HTMLDivElement>(null)
   const {
     slidePuzzle,
-    solvedPuzzle
+    solvedPuzzle,
+    backgroundStyle
   } = useStyles();
 
-  const movePieceCallback = (x: number): void => {
-    dispatch(boardStateAction(getFullBoardData(movePiece(pieces, x, activePiecePosition))))
+  // Handle window resizes
+  const responsiveSizeUpdate = () => {
+    setContainerSize(galleryRef.current?.offsetWidth || 0);
   }
+  
+  const throttledUpdate = useCallback(debounce(() => {
+      responsiveSizeUpdate()
+  }, 200), [])
+  
+  useLayoutEffect(() => {
+    responsiveSizeUpdate();
 
-  useEffect(() => {
-    dispatch(boardStateAction(getFullBoardData(shufflePieces(pieces))))
+    const handleResize = () => {
+      throttledUpdate()
+    }
+
+    window.addEventListener('resize', handleResize)
   }, [])
 
+  // Callbacks for interaction
+  const updateBoard = useCallback((newBoard: IPieceState[]): void => {
+    dispatch(boardStateAction(getFullBoardData(newBoard)))
+  }, [dispatch])
+
+  const movePieceCallback = (x: number): void => {
+    updateBoard(movePiece(pieces, x, activePiecePosition))
+  }
+
+  // If puzzle size in N length changes, generate a new board.
   useEffect(() => {
-    dispatch(boardStateAction(getFullBoardData(shufflePieces(prepNewShuffledBoard(size)))))
-  }, [size])
+    updateBoard(prepNewShuffledBoard(size))
+  }, [size, updateBoard]);
+
+  useEffect(() =>{
+    if(backgroundRef.current) {
+      const bgWidth = backgroundRef.current.offsetWidth;
+      const bgHeight = backgroundRef.current.offsetHeight;
+      setIsBgHorizontal(!!(bgWidth >= bgHeight))
+    }
+  }, [])
+
+  const generatePieceStyle = (element: IPieceState): CSSProperties => {
+    let availableSize = 0;
+    if (galleryRef.current) availableSize = galleryRef.current.offsetWidth
+    const bgSizeStyle = isBgHorizontal ? `auto ${availableSize}px` : `${availableSize}px auto` ;  
+    const perPieceSize = availableSize / size;
+    const originalXY = getXYFromPosition(element.key, size);
+
+    return {
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: bgSizeStyle,
+      backgroundPosition: `-${perPieceSize * originalXY.x}px -${perPieceSize * originalXY.y}px`
+    }
+  }
 
   const formGalleryElements = (): IGalleryElement[] => {
     return pieces.map((element, index) => {
@@ -53,20 +103,28 @@ const SlidePuzzle = () => {
             movePieceCallback={movePieceCallback}
             isActivePiece={isActivePiece}
             isAdjacentPiece={adjacentToActive.includes(index)}
+            bgStyles={generatePieceStyle(element)}
           />
         )
       }
     })
   }
 
-
   return (
     <div
       className={`${slidePuzzle} ${isSolved ? solvedPuzzle : null}`}
+      ref={galleryRef}
     >
       <SquaredGallery
         columns={size}
         elements={formGalleryElements()}
+        containerSize={containerSize}
+      />
+      <img
+        className={backgroundStyle}
+        src={bgImage}
+        ref={backgroundRef}
+        alt='Background Image Reference'
       />
     </div>
   )

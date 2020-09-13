@@ -1,5 +1,4 @@
-import React, { ReactElement, useRef, useLayoutEffect, useState, useCallback } from 'react';
-import { debounce } from 'lodash'
+import React, { ReactElement, useRef, useState, useEffect } from 'react';
 
 import { motion } from 'framer-motion'
 
@@ -15,11 +14,12 @@ export type ISquaredGalleryElementData = {
 interface IGalleryProps {
   columns: number,
   elements: ISquaredGalleryElementData[],
+  containerSize?: number,
 }
 
-const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
+const SquaredGallery = ({ columns, elements, containerSize }: IGalleryProps) => {
   const containerElement = useRef<HTMLUListElement>(null);
-  const [containerSize, setContainerSize] = useState<number>(0)
+  const [columnSize, setColumnSize] = useState<number>(0) 
 
   const {
     galleryContainer,
@@ -27,25 +27,14 @@ const SquaredGallery = ({ columns, elements }: IGalleryProps) => {
     hidden
   } = useStyles();
 
-  const throttledUpdate = useCallback(debounce(() => {
-    updateSize()
-  }, 200), [])
-
-  useLayoutEffect(() => {
-    updateSize();
-
-    const handleResize = () => {
-      throttledUpdate()
-    }
-
-    window.addEventListener('resize', handleResize)
-  }, [])
-
-  const updateSize = () => {
-    setContainerSize(containerElement.current?.offsetWidth || 0);
-  }
-
-  const columnSize = containerSize / columns;
+  
+  useEffect(()=>{
+    if(containerSize && containerElement.current) {
+      setColumnSize(containerSize / columns)
+    } else {
+      if (containerElement.current) setColumnSize(containerElement.current.offsetWidth)
+    };
+  }, [containerSize, columns])
 
   return (
     <ul
