@@ -9,7 +9,16 @@ const useStyles = createUseStyles({
     width: '100vw',
     height: '100vh',
     backgroundColor: '#1D4E89',
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    padding: '50px 0'
+  },
+  AppTitle:{
+    fontWeight: 700,
+    width: '90vw',
+    fontSize: '2vw',
+    color: 'white',
+    marginBottom: '30px',
+    textAlign: 'center'
   }
 })
 

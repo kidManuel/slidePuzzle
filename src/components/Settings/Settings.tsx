@@ -41,7 +41,7 @@ const Settings = (props: ISettingsProps) => {
     if (sizeSlider.current) {
       sizeSlider.current.value = puzzleSize.toString();
     }
-  }, [])
+  }, [puzzleSize])
 
   const {
     settingsWrapper,

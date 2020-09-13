@@ -41,8 +41,8 @@ export const getFullBoardData = (board: IPieceState[], size?: number): IPuzzleSt
 }
 
 const makeBoardSolvable = (board: IPieceState[]): IPieceState[] => {
-  const keyOnePosition = board.findIndex(element => element.key == 1);
-  const keyTwoPosition = board.findIndex(element => element.key == 2);
+  const keyOnePosition = board.findIndex(element => element.key === 1);
+  const keyTwoPosition = board.findIndex(element => element.key === 2);
   return swapTwoPieces(board, keyOnePosition, keyTwoPosition)
 }
 

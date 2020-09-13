@@ -7,12 +7,16 @@ import { SlidePuzzle, Settings } from './components/';
 
 function App() {
   const {
-    AppContainer
+    AppContainer,
+    AppTitle
   } = useStyles();
 
   return (
     <Provider store={store}>
       <div className={AppContainer}>
+        <h1 className={AppTitle}>
+          nPiece Slide Puzzle
+        </h1>
         <SlidePuzzle />
         <Settings />
       </div>

@@ -18,15 +18,19 @@ import bgImage from './greatWave.jpg'
 
 const SlidePuzzle = () => {
   const dispatch = useDispatch();
+
   const pieces = useSelector(selectors.getPieces);
   const activePiecePosition = useSelector(selectors.getActivePiece);
   const adjacentToActive = useSelector(selectors.getAdjacentToActive);
   const isSolved = useSelector(selectors.isSolved);
   const size = useSelector(selectors.puzzleSizeSelector);
+
   const [isBgHorizontal, setIsBgHorizontal] = useState<boolean>(true);
   const [containerSize, setContainerSize] = useState<number>(0)
+
   const backgroundRef = useRef<HTMLImageElement>(null)
   const galleryRef = useRef<HTMLDivElement>(null)
+
   const {
     slidePuzzle,
     solvedPuzzle,
@@ -66,13 +70,14 @@ const SlidePuzzle = () => {
     updateBoard(prepNewShuffledBoard(size))
   }, [size, updateBoard]);
 
-  useEffect(() =>{
+  
+  const measureRef = (): void => {
     if(backgroundRef.current) {
-      const bgWidth = backgroundRef.current.offsetWidth;
-      const bgHeight = backgroundRef.current.offsetHeight;
+      const bgWidth = backgroundRef.current.width;
+      const bgHeight = backgroundRef.current.height;
       setIsBgHorizontal(!!(bgWidth >= bgHeight))
     }
-  }, [])
+  }
 
   const generatePieceStyle = (element: IPieceState): CSSProperties => {
     let availableSize = 0;
@@ -124,7 +129,8 @@ const SlidePuzzle = () => {
         className={backgroundStyle}
         src={bgImage}
         ref={backgroundRef}
-        alt='Background Image Reference'
+        onLoad={measureRef}
+        alt='Background Reference'
       />
     </div>
   )
