@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { boardStateAction } from '../../store/actions'
 import { getPieces } from '../../store/selectors'
-import { shufflePieces, findActivePieceInBoard, findAdjacentsToActive, isBoardSolved } from '../../common/nPiecePuzzleUtility'
+import { shufflePieces, getFullBoardData } from '../../common/nPiecePuzzleUtility'
 import useStyles from './styles';
 
 interface ISettingsProps {
@@ -14,20 +14,7 @@ const Settings = (props: ISettingsProps) => {
   const pieces = useSelector(getPieces);
 
   const handleShuffle = () => {
-    let newPieces = shufflePieces(pieces);
-
-    // Is this check worht it for the one-in-several-billion chance the game gets shuffled to a solved state? 
-    while (isBoardSolved(newPieces)) newPieces = shufflePieces(pieces);
-    const newActivePiecePosition = findActivePieceInBoard(newPieces);
-
-    // TODO PASS SIZE
-    const newAdjacent = findAdjacentsToActive(newPieces, newActivePiecePosition, 4);
-    dispatch(boardStateAction({
-      pieces: newPieces,
-      activePiecePosition: newActivePiecePosition,
-      adjacentToActive: newAdjacent,
-      isSolved: false
-    }))
+    dispatch(boardStateAction(getFullBoardData(shufflePieces(pieces))))
   }
 
   const {
