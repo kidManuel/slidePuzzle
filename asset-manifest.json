@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/slide-puzzle/static/css/main.286a9ec7.chunk.css",
-    "main.js": "/slide-puzzle/static/js/main.464d086f.chunk.js",
-    "main.js.map": "/slide-puzzle/static/js/main.464d086f.chunk.js.map",
-    "runtime-main.js": "/slide-puzzle/static/js/runtime-main.1a43e5ed.js",
-    "runtime-main.js.map": "/slide-puzzle/static/js/runtime-main.1a43e5ed.js.map",
-    "static/css/2.055a14f7.chunk.css": "/slide-puzzle/static/css/2.055a14f7.chunk.css",
-    "static/js/2.7b563303.chunk.js": "/slide-puzzle/static/js/2.7b563303.chunk.js",
-    "static/js/2.7b563303.chunk.js.map": "/slide-puzzle/static/js/2.7b563303.chunk.js.map",
-    "index.html": "/slide-puzzle/index.html",
-    "precache-manifest.33ff6533967204c8c57a76216262a1b3.js": "/slide-puzzle/precache-manifest.33ff6533967204c8c57a76216262a1b3.js",
-    "service-worker.js": "/slide-puzzle/service-worker.js",
-    "static/css/2.055a14f7.chunk.css.map": "/slide-puzzle/static/css/2.055a14f7.chunk.css.map",
-    "static/css/main.286a9ec7.chunk.css.map": "/slide-puzzle/static/css/main.286a9ec7.chunk.css.map",
-    "static/js/2.7b563303.chunk.js.LICENSE.txt": "/slide-puzzle/static/js/2.7b563303.chunk.js.LICENSE.txt",
-    "static/media/greatWave.jpg": "/slide-puzzle/static/media/greatWave.bf385690.jpg"
+    "main.css": "/slidePuzzle/static/css/main.286a9ec7.chunk.css",
+    "main.js": "/slidePuzzle/static/js/main.1d157699.chunk.js",
+    "main.js.map": "/slidePuzzle/static/js/main.1d157699.chunk.js.map",
+    "runtime-main.js": "/slidePuzzle/static/js/runtime-main.b49a7972.js",
+    "runtime-main.js.map": "/slidePuzzle/static/js/runtime-main.b49a7972.js.map",
+    "static/css/2.055a14f7.chunk.css": "/slidePuzzle/static/css/2.055a14f7.chunk.css",
+    "static/js/2.7b563303.chunk.js": "/slidePuzzle/static/js/2.7b563303.chunk.js",
+    "static/js/2.7b563303.chunk.js.map": "/slidePuzzle/static/js/2.7b563303.chunk.js.map",
+    "index.html": "/slidePuzzle/index.html",
+    "precache-manifest.4f0b16bcb55ee96a4d085d69bdaa303b.js": "/slidePuzzle/precache-manifest.4f0b16bcb55ee96a4d085d69bdaa303b.js",
+    "service-worker.js": "/slidePuzzle/service-worker.js",
+    "static/css/2.055a14f7.chunk.css.map": "/slidePuzzle/static/css/2.055a14f7.chunk.css.map",
+    "static/css/main.286a9ec7.chunk.css.map": "/slidePuzzle/static/css/main.286a9ec7.chunk.css.map",
+    "static/js/2.7b563303.chunk.js.LICENSE.txt": "/slidePuzzle/static/js/2.7b563303.chunk.js.LICENSE.txt",
+    "static/media/greatWave.jpg": "/slidePuzzle/static/media/greatWave.bf385690.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1a43e5ed.js",
+    "static/js/runtime-main.b49a7972.js",
     "static/css/2.055a14f7.chunk.css",
     "static/js/2.7b563303.chunk.js",
     "static/css/main.286a9ec7.chunk.css",
-    "static/js/main.464d086f.chunk.js"
+    "static/js/main.1d157699.chunk.js"
   ]
 }
