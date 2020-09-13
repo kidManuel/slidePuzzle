@@ -1,7 +1,7 @@
 import { IPieceState, IXYPosition, IPuzzleState } from './interfaces'
 import { shuffle } from 'lodash'
 
-export const shufflePieces = (board: IPieceState[], size?: number): IPieceState[] => {
+export const shufflePieces = (board: IPieceState[]): IPieceState[] => {
   const newPositions = [];
   for (let e = 0; e < board.length; e++) newPositions.push(e)
   const shuffledPositions = shuffle(newPositions);
@@ -10,7 +10,7 @@ export const shufflePieces = (board: IPieceState[], size?: number): IPieceState[
   });
 
   if (!isBoardSolvable(newBoard)) {
-    return (makeBoardSolvable(newBoard, size));
+    return (makeBoardSolvable(newBoard));
   }
 
   return newBoard;
@@ -40,21 +40,20 @@ export const getFullBoardData = (board: IPieceState[], size?: number): IPuzzleSt
   }
 }
 
-const makeBoardSolvable = (board: IPieceState[], size?: number): IPieceState[] => {
+const makeBoardSolvable = (board: IPieceState[]): IPieceState[] => {
   const keyOnePosition = board.findIndex(element => element.key == 1);
   const keyTwoPosition = board.findIndex(element => element.key == 2);
-  return swapTwoPieces(board, keyOnePosition, keyTwoPosition, size)
+  return swapTwoPieces(board, keyOnePosition, keyTwoPosition)
 }
 
 export const isBoardSolved = (board: IPieceState[]): boolean => {
-  let isSolved = true;
-  board.forEach((element, index) => {
-    if (element.key !== index) {
-      isSolved = false;
+  for (let e = 0; e < board.length; e++) {
+    if (board[e].key !== e) {
+      return false;
     }
-  })
+  }
 
-  return isSolved;
+  return true;
 }
 
 export const findActivePieceInBoard = (board: IPieceState[]): number => {
@@ -124,12 +123,9 @@ const isBoardSolvable = (board: IPieceState[], activePiecePosition?: number, siz
   return false;
 }
 
-const swapTwoPieces = (board: IPieceState[], pieceA: number, pieceB: number, size?: number): IPieceState[] => {
-  size = size || Math.sqrt(board.length);
-
+const swapTwoPieces = (board: IPieceState[], pieceA: number, pieceB: number): IPieceState[] => {
   const newPiecePositions = [...board];
 
-  // Switch two piece positions
   const pieceKey = newPiecePositions[pieceA].key;
   const activePieceKey = newPiecePositions[pieceB].key;
 
@@ -139,11 +135,10 @@ const swapTwoPieces = (board: IPieceState[], pieceA: number, pieceB: number, siz
   return newPiecePositions;
 }
 
-export const movePiece = (board: IPieceState[], piece: number, activePiecePosition?: number, size?: number): IPieceState[] => {
+export const movePiece = (board: IPieceState[], piece: number, activePiecePosition?: number): IPieceState[] => {
   activePiecePosition = activePiecePosition ? activePiecePosition : findActivePieceInBoard(board);
-  size = size || Math.sqrt(board.length);
 
-  return swapTwoPieces(board, piece, activePiecePosition, size);
+  return swapTwoPieces(board, piece, activePiecePosition);
 }
 
 export const getXYFromPosition = (position: number, size: number): IXYPosition => {

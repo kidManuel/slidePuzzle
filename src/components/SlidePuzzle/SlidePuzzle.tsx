@@ -27,7 +27,7 @@ const SlidePuzzle = () => {
   } = useStyles();
 
   const movePieceCallback = (x: number): void => {
-    dispatch(boardStateAction(getFullBoardData(movePiece(pieces, x, activePiecePosition, size))))
+    dispatch(boardStateAction(getFullBoardData(movePiece(pieces, x, activePiecePosition))))
   }
 
   useEffect(() => {
