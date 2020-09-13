@@ -20,11 +20,6 @@ const puzzleReducer = (state: IPuzzleState = puzzleStateDefault, action: IMoveAc
 
 const userConfigurationReducer = (state: IUserConfig = userConfigDefault, action: userConfigTypes) => {
   switch (action.type) {
-    case types.USER_CONFIGURATION: {
-      return {
-        ...state
-      }
-    }
     case types.SET_HINTS_VISIBILITY: {
       return {
         ...state,

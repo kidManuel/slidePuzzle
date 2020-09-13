@@ -19,10 +19,10 @@ import bgImage from './greatWave.jpg'
 const SlidePuzzle = () => {
   const dispatch = useDispatch();
 
-  const pieces = useSelector(selectors.getPieces);
-  const activePiecePosition = useSelector(selectors.getActivePiece);
-  const adjacentToActive = useSelector(selectors.getAdjacentToActive);
-  const isSolved = useSelector(selectors.isSolved);
+  const pieces = useSelector(selectors.getPiecesSelector);
+  const activePiecePosition = useSelector(selectors.getActivePieceSelector);
+  const adjacentToActive = useSelector(selectors.getAdjacentToActiveSelector);
+  const isSolved = useSelector(selectors.isSolvedSelector);
   const size = useSelector(selectors.puzzleSizeSelector);
 
   const [isBgHorizontal, setIsBgHorizontal] = useState<boolean>(true);
@@ -41,11 +41,11 @@ const SlidePuzzle = () => {
   const responsiveSizeUpdate = () => {
     setContainerSize(galleryRef.current?.offsetWidth || 0);
   }
-  
+
   const throttledUpdate = useCallback(debounce(() => {
-      responsiveSizeUpdate()
+    responsiveSizeUpdate()
   }, 200), [])
-  
+
   useLayoutEffect(() => {
     responsiveSizeUpdate();
 
@@ -70,9 +70,9 @@ const SlidePuzzle = () => {
     updateBoard(prepNewShuffledBoard(size))
   }, [size, updateBoard]);
 
-  
+
   const measureRef = (): void => {
-    if(backgroundRef.current) {
+    if (backgroundRef.current) {
       const bgWidth = backgroundRef.current.width;
       const bgHeight = backgroundRef.current.height;
       setIsBgHorizontal(!!(bgWidth >= bgHeight))
@@ -82,7 +82,7 @@ const SlidePuzzle = () => {
   const generatePieceStyle = useCallback((key: number): CSSProperties => {
     let availableSize = 0;
     if (galleryRef.current) availableSize = galleryRef.current.offsetWidth
-    const bgSizeStyle = isBgHorizontal ? `auto ${availableSize}px` : `${availableSize}px auto` ;  
+    const bgSizeStyle = isBgHorizontal ? `auto ${availableSize}px` : `${availableSize}px auto`;
     const perPieceSize = availableSize / size;
     const originalXY = getXYFromPosition(key, size);
 

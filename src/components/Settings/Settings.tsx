@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { debounce } from 'lodash'
 
 import { boardStateAction, setHintsVisibilityAction, setPuzzleSizeAction } from '../../store/actions'
-import { getPieces, showHintsSelector, puzzleSizeSelector } from '../../store/selectors'
+import { getPiecesSelector, showHintsSelector, puzzleSizeSelector } from '../../store/selectors'
 import { shufflePieces, getFullBoardData } from '../../common/nPiecePuzzleUtility'
 import useStyles from './styles';
 
@@ -12,7 +12,7 @@ interface ISettingsProps {
 
 const Settings = (props: ISettingsProps) => {
   const dispatch = useDispatch();
-  const pieces = useSelector(getPieces);
+  const pieces = useSelector(getPiecesSelector);
   const showHints = useSelector(showHintsSelector);
   const puzzleSize = useSelector(puzzleSizeSelector);
   const sizeSlider = useRef<HTMLInputElement>(null);

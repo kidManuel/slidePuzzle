@@ -15,7 +15,6 @@ const useStyles = createUseStyles({
   hidden: {
     zIndex: -1,
     opacity: 0
-
   }
 })
 
