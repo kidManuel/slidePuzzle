@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
     border: 'solid 0px white',
     transition: 'all 0.4s',
     position: 'relative',
+    overflow: 'hidden',
     '&:before': {
       content: '"you solved it my dude!"',
       textTransform: 'uppercase',

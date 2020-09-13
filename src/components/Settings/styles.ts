@@ -3,7 +3,10 @@ import { createUseStyles } from 'react-jss'
 const useStyles = createUseStyles({
   settingsWrapper: {
     padding: 30,
-    color: 'white'
+    color: 'white',
+    '& label': {
+      userSelect: 'none'
+    }
   },
   field: {
     margin: '30px 0'

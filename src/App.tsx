@@ -13,10 +13,7 @@ function App() {
   return (
     <Provider store={store}>
       <div className={AppContainer}>
-        <SlidePuzzle
-          size={4}
-          showNumbers={true}
-        />
+        <SlidePuzzle />
         <Settings />
       </div>
     </Provider >

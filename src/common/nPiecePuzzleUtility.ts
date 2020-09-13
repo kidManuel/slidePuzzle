@@ -16,6 +16,19 @@ export const shufflePieces = (board: IPieceState[], size?: number): IPieceState[
   return newBoard;
 }
 
+export const prepNewShuffledBoard = (size: number): IPieceState[] => {
+  const totalPieces = size * size;
+  const newPieces = [];
+  for (let n = 0; n < totalPieces; n++) {
+    const newPiece = {
+      key: n,
+      position: getXYFromPosition(n, size)
+    }
+    newPieces.push(newPiece)
+  }
+  return shufflePieces(newPieces);
+}
+
 export const getFullBoardData = (board: IPieceState[], size?: number): IPuzzleState => {
   const newActivePieceIndex = findActivePieceInBoard(board);
 
@@ -76,10 +89,11 @@ export const findAdjacentsToActive = (board: IPieceState[], activePiecePosition?
 }
 
 const getInversionsInBoard = (board: IPieceState[]): number => {
+  const activePieceKey = board.length - 1;
   let invCount = 0;
   for (let i = 0; i < board.length; i++) {
     for (let j = i + 1; j < board.length; j++) {
-      if (board[i] > board[j]) invCount++
+      if ((board[i].key !== activePieceKey) && (board[j].key !== activePieceKey) && board[i].key > board[j].key) invCount++
     }
   }
   return invCount;
@@ -90,6 +104,8 @@ const isOdd = (number: number): boolean => {
 }
 
 const isBoardSolvable = (board: IPieceState[], activePiecePosition?: number, size?: number): boolean => {
+  // https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+
   size = size || Math.sqrt(board.length);
   const activePiece = activePiecePosition ? board[activePiecePosition] : board[findActivePieceInBoard(board)];
   const boardInversions = getInversionsInBoard(board);

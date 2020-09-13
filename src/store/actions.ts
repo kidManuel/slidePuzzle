@@ -1,4 +1,4 @@
-import { IPuzzleState, IUserConfig } from '../common/interfaces';
+import { IPuzzleState } from '../common/interfaces';
 
 import * as types from './actionTypes'
 
@@ -10,8 +10,12 @@ export interface IMoveActivePieceAction extends IBasicAction {
   payload: IPuzzleState
 }
 
-export interface IUpdateUserConfigAction extends IBasicAction {
-  payload: IUserConfig
+export interface IUpdateHintsVisibilityAction extends IBasicAction {
+  payload: boolean
+}
+
+export interface ISetPuzzleSizeAction extends IBasicAction {
+  payload: number
 }
 
 export const boardStateAction = (newState: IPuzzleState): IMoveActivePieceAction => {
@@ -23,10 +27,18 @@ export const boardStateAction = (newState: IPuzzleState): IMoveActivePieceAction
   }
 }
 
-
-export const userConfigAction = (newConfig: IUserConfig): IUpdateUserConfigAction => {
+export const setHintsVisibilityAction = (newSize: boolean): IUpdateHintsVisibilityAction => {
   return {
-    type: types.MOVE_ACTIVE,
-    payload: newConfig
+    type: types.SET_HINTS_VISIBILITY,
+    payload: newSize
   }
 }
+
+export const setPuzzleSizeAction = (newSize: number): ISetPuzzleSizeAction => {
+  return {
+    type: types.SET_PUZZLE_SIZE,
+    payload: newSize
+  }
+}
+
+export type userConfigTypes = IUpdateHintsVisibilityAction | ISetPuzzleSizeAction;

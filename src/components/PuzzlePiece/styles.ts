@@ -43,7 +43,14 @@ const useStyles = createUseStyles({
     display: 'grid',
     placeItems: 'center',
     color: 'white',
-    userSelect: 'none'
+    userSelect: 'none',
+    opacity: 1,
+    transition: 'all 0.2s'
+  },
+  hideHints: {
+    '& $contentContainer': {
+      opacity: 0,
+    }
   }
 })
 

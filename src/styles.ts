@@ -9,6 +9,7 @@ const useStyles = createUseStyles({
     width: '100vw',
     height: '100vh',
     backgroundColor: '#1D4E89',
+    overflowX: 'hidden'
   }
 })
 
