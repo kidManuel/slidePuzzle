@@ -8,4 +8,6 @@ This project is an utility and implementation of algorithms for [arbitrarly size
 
 and
 
-`yarn start should be all you need`
+`yarn start`
+
+should be all you need
