@@ -19,10 +19,8 @@ export interface ISetPuzzleSizeAction extends IBasicAction {
 }
 
 export const boardStateAction = (newState: IPuzzleState): IMoveActivePieceAction => {
-
-  // TODO change action name
   return {
-    type: types.MOVE_ACTIVE,
+    type: types.UPDATE_BOARD,
     payload: newState
   }
 }

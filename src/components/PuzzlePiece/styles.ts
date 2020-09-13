@@ -14,7 +14,6 @@ const useStyles = createUseStyles({
     overflow: 'hidden'
   },
   active: {
-    opacity: 0
   },
   adjacent: {
     '&:after': {

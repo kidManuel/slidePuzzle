@@ -79,28 +79,29 @@ const SlidePuzzle = () => {
     }
   }
 
-  const generatePieceStyle = (element: IPieceState): CSSProperties => {
+  const generatePieceStyle = useCallback((key: number): CSSProperties => {
     let availableSize = 0;
     if (galleryRef.current) availableSize = galleryRef.current.offsetWidth
     const bgSizeStyle = isBgHorizontal ? `auto ${availableSize}px` : `${availableSize}px auto` ;  
     const perPieceSize = availableSize / size;
-    const originalXY = getXYFromPosition(element.key, size);
+    const originalXY = getXYFromPosition(key, size);
 
     return {
       backgroundImage: `url(${bgImage})`,
       backgroundSize: bgSizeStyle,
       backgroundPosition: `-${perPieceSize * originalXY.x}px -${perPieceSize * originalXY.y}px`
     }
-  }
+  }, [size, containerSize])
 
   const formGalleryElements = (): IGalleryElement[] => {
     return pieces.map((element, index) => {
       const { key } = element;
       const isActivePiece = (index === activePiecePosition);
+      const shouldHide = isActivePiece && !isSolved;
       return {
         id: `element${key}`,
         order: index,
-        hidden: isActivePiece,
+        hidden: shouldHide,
         element: (
           <PuzzlePiece
             pos={index}
@@ -108,7 +109,7 @@ const SlidePuzzle = () => {
             movePieceCallback={movePieceCallback}
             isActivePiece={isActivePiece}
             isAdjacentPiece={adjacentToActive.includes(index)}
-            bgStyles={generatePieceStyle(element)}
+            bgStyles={generatePieceStyle(element.key)}
           />
         )
       }

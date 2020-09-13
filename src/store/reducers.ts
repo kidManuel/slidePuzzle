@@ -7,7 +7,7 @@ import { IPuzzleState, IUserConfig } from '../common/interfaces';
 
 const puzzleReducer = (state: IPuzzleState = puzzleStateDefault, action: IMoveActivePieceAction) => {
   switch (action.type) {
-    case types.MOVE_ACTIVE: {
+    case types.UPDATE_BOARD: {
       return {
         ...state,
         ...action.payload
