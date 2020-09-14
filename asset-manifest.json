@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/slidePuzzle/static/css/main.286a9ec7.chunk.css",
-    "main.js": "/slidePuzzle/static/js/main.1d157699.chunk.js",
-    "main.js.map": "/slidePuzzle/static/js/main.1d157699.chunk.js.map",
+    "main.js": "/slidePuzzle/static/js/main.72f05b96.chunk.js",
+    "main.js.map": "/slidePuzzle/static/js/main.72f05b96.chunk.js.map",
     "runtime-main.js": "/slidePuzzle/static/js/runtime-main.b49a7972.js",
     "runtime-main.js.map": "/slidePuzzle/static/js/runtime-main.b49a7972.js.map",
     "static/css/2.055a14f7.chunk.css": "/slidePuzzle/static/css/2.055a14f7.chunk.css",
     "static/js/2.7b563303.chunk.js": "/slidePuzzle/static/js/2.7b563303.chunk.js",
     "static/js/2.7b563303.chunk.js.map": "/slidePuzzle/static/js/2.7b563303.chunk.js.map",
     "index.html": "/slidePuzzle/index.html",
-    "precache-manifest.4f0b16bcb55ee96a4d085d69bdaa303b.js": "/slidePuzzle/precache-manifest.4f0b16bcb55ee96a4d085d69bdaa303b.js",
+    "precache-manifest.336a2e6c0d0e03f7834f9fa060bdb666.js": "/slidePuzzle/precache-manifest.336a2e6c0d0e03f7834f9fa060bdb666.js",
     "service-worker.js": "/slidePuzzle/service-worker.js",
     "static/css/2.055a14f7.chunk.css.map": "/slidePuzzle/static/css/2.055a14f7.chunk.css.map",
     "static/css/main.286a9ec7.chunk.css.map": "/slidePuzzle/static/css/main.286a9ec7.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.055a14f7.chunk.css",
     "static/js/2.7b563303.chunk.js",
     "static/css/main.286a9ec7.chunk.css",
-    "static/js/main.1d157699.chunk.js"
+    "static/js/main.72f05b96.chunk.js"
   ]
 }
