@@ -13,6 +13,9 @@ export const shufflePieces = (board: IPieceState[]): IPieceState[] => {
     return (makeBoardSolvable(newBoard));
   }
 
+  if (isBoardSolved(newBoard)) {
+    return shufflePieces(newBoard)
+  }
   return newBoard;
 }
 
@@ -26,6 +29,7 @@ export const prepNewShuffledBoard = (size: number): IPieceState[] => {
     }
     newPieces.push(newPiece)
   }
+
   return shufflePieces(newPieces);
 }
 
